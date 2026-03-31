@@ -14,18 +14,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Simple sticky header effect on scroll
+    // Improved sticky header effect on scroll
+    const header = document.querySelector('header');
     window.addEventListener('scroll', () => {
-        const header = document.querySelector('header');
         if (header) {
-            if (window.scrollY > 50) {
-                header.style.padding = '10px 0';
-                header.style.boxShadow = '0 5px 20px rgba(0,0,0,0.1)';
+            if (window.scrollY > 30) {
+                header.classList.add('scrolled');
             } else {
-                header.style.padding = '20px 0';
-                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.05)';
+                header.classList.remove('scrolled');
             }
         }
+    });
+
+    // Intersection Observer for reveal animations
+    const revealCallback = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                // Once it's revealed, we can stop observing it
+                observer.unobserve(entry.target);
+            }
+        });
+    };
+
+    const revealObserver = new IntersectionObserver(revealCallback, {
+        threshold: 0.15, // Trigger when 15% of the element is visible
+        rootMargin: '0px 0px -50px 0px' // Offset to trigger slightly before/after
+    });
+
+    document.querySelectorAll('.reveal').forEach(el => {
+        revealObserver.observe(el);
     });
 
     // Mock dashboard link
