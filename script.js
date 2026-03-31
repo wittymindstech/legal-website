@@ -62,8 +62,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // Close others
             faqItems.forEach(other => {
                 if (other !== item) {
-                    other.querySelector('.faq-answer').style.display = 'none';
-                    other.querySelector('.faq-question i').className = 'fas fa-chevron-down';
+                    const otherAnswer = other.querySelector('.faq-answer');
+                    if (otherAnswer) otherAnswer.style.display = 'none';
+                    const otherIcon = other.querySelector('.faq-question i');
+                    if (otherIcon) otherIcon.className = 'fas fa-chevron-down';
                 }
             });
 
@@ -77,6 +79,36 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (icon) icon.className = 'fas fa-chevron-up';
                 }
             }
+        });
+    });
+
+    // Mobile Menu Toggle
+    const menuToggle = document.getElementById('mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+    const navBtns = document.querySelector('.nav-btns');
+
+    if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            navBtns.classList.toggle('active');
+            
+            // Change icon
+            const icon = menuToggle.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.className = 'fas fa-times';
+            } else {
+                icon.className = 'fas fa-bars';
+            }
+        });
+    }
+
+    // Close mobile menu when clicking a link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            navBtns.classList.remove('active');
+            const icon = menuToggle.querySelector('i');
+            if (icon) icon.className = 'fas fa-bars';
         });
     });
 });

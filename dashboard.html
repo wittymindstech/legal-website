@@ -135,6 +135,7 @@
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            overflow: hidden; /* Prevent table overflow */
         }
 
         .card-title {
@@ -145,9 +146,16 @@
             color: var(--primary);
         }
 
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
         .consult-table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 500px; /* Ensure table doesn't get too squished */
         }
 
         .consult-table th {
@@ -180,6 +188,24 @@
             .main-content { margin-left: 80px; }
             .stats-grid { grid-template-columns: 1fr; }
             .dashboard-body { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            body { flex-direction: column; }
+            .sidebar { 
+                position: relative; 
+                width: 100%; 
+                height: auto; 
+                flex-direction: row; 
+                padding: 10px;
+                justify-content: center;
+                gap: 10px;
+            }
+            .sidebar .menu-item { margin-bottom: 0; padding: 10px; }
+            .main-content { margin-left: 0; padding: 20px; }
+            .dash-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+            .user-profile { width: 100%; justify-content: space-between; border-top: 1px solid #eee; padding-top: 20px; }
+            .stat-card { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
